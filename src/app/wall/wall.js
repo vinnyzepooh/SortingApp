@@ -1,9 +1,11 @@
 angular.module('SortingApp.wall')
-    .config(function config($stateProvider){
+
+    .config(function config($stateProvider) {
         $stateProvider
             .state('home', {
-                ur:'/',
+                url: '/',
                 templateUrl: 'app/wall/wall.html',
                 controller: 'WallController'
-            })
+            });
+
     });

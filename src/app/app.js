@@ -1,21 +1,34 @@
 'use strict';
 
-angular.module ('SortingApp', [
+angular.module('SortingApp', [
     'ui.router',
-    'ui.tree',
+    'ngMaterial',
     'infinite-scroll',
-    'firebase'
+    'ui.tree',
+    'ngResource',
+    'firebase',
+    'SortingApp.common',
+    'SortingApp.wall',
+    'AngTeam.common.services']);
+
+angular.module('SortingApp.wall', ['ui.router']);
+
+angular.module('SortingApp.common', [
+    'SortingApp.common.services'
 ]);
 
-angular.module ('SortingApp')
+angular.module('SortingApp.common.services', []);
+
+angular.module('AngTeam.common.services', []);
+
+angular.module('SortingApp')
+
     .config(['$urlRouterProvider', '$locationProvider', function ($urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise("/404");
 
-        $urlRouterProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
     }]);
 
 angular.element(document).ready(function () {
     angular.bootstrap(document, ['SortingApp']);
 });
-
-angular.module ('SortingApp.wall', ['ui.router']);
