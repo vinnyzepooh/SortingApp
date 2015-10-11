@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.x",
+    "angular-material": "0.11.2",
     "angular-ui-router": "~0.2.15",
     "angular-ui-tree": "~2.9.0",
     "ngInfiniteScroll": "~1.2.1",
