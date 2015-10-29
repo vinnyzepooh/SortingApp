@@ -1,5 +1,8 @@
-angular.module('AngTeam.common.services')
+angular.module('wsApp.common.services')
 
     .constant('Constants', {
-        API: 'http://backend-vinnyzepooh.rhcloud.com/api'
+        API_URL: 'http://backend-vinnyzepooh.rhcloud.com/api',
+        API_VERSION: '5.37',
+        POSTS_REQUEST_MAX: 100,
+        POSTS_PER_CHUNK: 25
     });

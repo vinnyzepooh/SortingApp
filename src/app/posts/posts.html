@@ -1,0 +1,111 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <span class="page-main__wall-caption md-flex">Сортируй свои посты!</span>
+    </div>
+</md-toolbar>
+
+<md-virtual-repeat-container id="vertical-container">
+    <div md-virtual-repeat="post in posts" md-on-demand
+         class="repeated-item" flex>
+        {{post.id}}
+    </div>
+</md-virtual-repeat-container>
+
+<!--<div id="scrollingContainer" class="block">-->
+    <!--<div class="post_area">-->
+        <!--<div data-ui-view-->
+             <!--infinite-scroll-container="'#scrollingContainer'"-->
+             <!--infinite-scroll="loadMorePosts()"-->
+             <!--infinite-scroll-distance="0"-->
+             <!--infinite-scroll-parent="true">-->
+            <!--<div ui-tree="postsOptions">-->
+                <!--<ul ui-tree-nodes="" ng-model="posts" id="listed">-->
+                    <!--<li ui-tree-node ng-repeat="post in posts" id='postContainer'>-->
+                        <!--<div>-->
+                            <!--<div class="handle" ui-tree-handle><img ng-src="/AppWS/img/handle-icon-actions.png">-->
+                            <!--</div>-->
+                            <!--<div class="pics">-->
+                                <!--<span ng-repeat="pics in post.attachments" ng-hide="!pics.photo.photo_130">-->
+                                    <!--<span>-->
+                                        <!--<img class="images" ng-src="{{pics.photo.photo_130}}">-->
+                                    <!--</span>-->
+                                <!--</span>-->
+                                <!--<span ng-repeat="oldPost in post.copy_history">-->
+                                    <!--<span ng-repeat="oldPics in oldPost.attachments" ng-hide="!oldPics.photo.photo_130">-->
+                                        <!--<img class="images" ng-src=" {{oldPics.photo.photo_130}}">-->
+                                    <!--</span>-->
+                                <!--</span>-->
+                            <!--</div>-->
+                            <!--<div class="text">{{post.text}}<p ng-repeat="oldPost in post.copy_history">-->
+                                <!--{{oldPost.text}}</p>-->
+                            <!--</div>-->
+                            <!--<div class="audio">-->
+                                <!--<div ng-repeat="audio in post.attachments">-->
+                                    <!--<div>-->
+                                        <!--<a href="http://vk.com/{{screenName.screen_name}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"-->
+                                           <!--target="_blank" ng-hide="!audio.audio.artist"> <img-->
+                                                <!--src="http://vitalvkt.esy.es/AppWS/img/nav.png">-->
+                                            <!--{{audio.audio.artist}} - -->
+                                            <!--{{audio.audio.title}} </a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div ng-repeat="oldAudio in post.copy_history">-->
+                                    <!--<div ng-repeat="historyAudio in oldAudio.attachments">-->
+                                        <!--<a href="http://vk.com/{{screenName.screen_name}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"-->
+                                           <!--target="_blank" ng-hide="!historyAudio.audio.artist"> <img-->
+                                                <!--src="http://vitalvkt.esy.es/AppWS/img/nav.png">-->
+                                            <!--{{historyAudio.audio.artist}} - -->
+                                            <!--{{historyAudio.audio.title}} </a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="video">-->
+                                <!--<div>-->
+                                    <!--<div ng-repeat="video in post.attachments">-->
+                                        <!--<div>-->
+                                            <!--<a href="http://vk.com/{{screenName.screen_name}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"-->
+                                               <!--target="_blank" ng-hide="!video.video.title"> <img-->
+                                                    <!--class="videoPrev"-->
+                                                    <!--ng-src="{{video.video.photo_320}}">-->
+                                                <!--<img class="videoPic"-->
+                                                     <!--src="http://vitalvkt.esy.es/AppWS/img/PlayButton.png"-->
+                                                     <!--style="width: 100px; height: 40px"> <br>-->
+
+                                                <!--<p class="vidTittle"> {{video.video.title}} </p></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div ng-repeat="oldVideo in post.copy_history">-->
+                                        <!--<div ng-repeat="historyVideo in oldVideo.attachments">-->
+                                            <!--<a href="http://vk.com/{{screenName.screen_name}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"-->
+                                               <!--target="_blank" ng-hide="!historyVideo.video.title"> <img-->
+                                                    <!--class="videoPrev"-->
+                                                    <!--ng-src="{{historyVideo.video.photo_320}}">-->
+                                                <!--<img class="videoPic"-->
+                                                     <!--src="http://vitalvkt.esy.es/AppWS/img/PlayButton.png"-->
+                                                     <!--style="width: 100px; height: 40px">-->
+
+                                                <!--<div>-->
+
+                                                    <!--<p class="vidTittle"> {{historyVideo.video.title}} </p>-->
+                                                <!--</div>-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                                <!--<div class="allPost">-->
+                                    <!--<a href="http://vk.com/{{screenName.screen_name}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"-->
+                                       <!--target="_blank">Показать весь пост</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;    <tags-input ng-model="tags">-->
+                                <!--<auto-complete source="loadTags($query)" min-length=1></auto-complete>-->
+                            <!--</tags-input> &ndash;&gt;-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
