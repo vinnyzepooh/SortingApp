@@ -1,110 +1,89 @@
 angular.module('wsApp.posts')
 
-    .controller('PostsController', ['$scope', '$stateParams', 'PostService', 'AuthService', 'Constants', 'SyncService', function ($scope, $stateParams, PostService, AuthService, Constants, SyncService) {
-        var self = this;
-        self.initPosts = [];
-
-        $scope.postSignatures = [];
+    .controller('PostsController', ['$scope', '$stateParams', '$timeout', 'PostService', 'AuthService', 'Constants', 'SyncService', function ($scope, $stateParams, $timeout, PostService, AuthService, Constants, SyncService) {
+        $scope.isLoaded = false;
 
         AuthService.getMyProfile({
             version: Constants.API_VERSION
         }).then(function (userId) {
             if (SyncService.isSynchronized) {
+                getPostsByTag(userId);
+            }
+
+            $scope.$on('synchronizationEvent', function (event, data) {
+                getPostsByTag(userId);
+            });
+
+            function getPostsByTag(userId) {
                 PostService.getPostsByTag($stateParams.tagName, userId).$promise.then(function (data) {
-                    $scope.postSignatures = data.posts;
-
-                    PostService.getPostsFromVKById({
-                        posts: $scope.postSignatures.slice(0, 9),
-                        extended: '1',
-                        v: '5.37',
-                        test_mode: '1'
-                    }).then(function (posts1) {
-                        self.initPosts = posts1;
-                        PostService.getPostsFromVKById({
-                            posts: $scope.postSignatures.slice(10, 19),
-                            extended: '1',
-                            v: '5.37',
-                            test_mode: '1'
-                        }).then(function (posts2) {
-                            self.initPosts = self.initPosts.concat(posts2);
-                            PostService.getPostsFromVKById({
-                                posts: $scope.postSignatures.slice(20, 29),
-                                extended: '1',
-                                v: '5.37',
-                                test_mode: '1'
-                            }).then(function (posts3) {
-                                self.initPosts = self.initPosts.concat(posts3);
-
-                                $scope.posts = {
-                                    posts_: self.initPosts,
-                                    // Required.
-                                    getItemAtIndex: function(index) {
-                                        console.log("index: " + index);
-                                        if (index > this.posts_.length) {
-                                            this.fetchMoreItems_(index);
-                                            return null;
-                                        }
-                                        return this.posts_[index];
-                                    },
-                                    // Required.
-                                    // For infinite scroll behavior, we always return a slightly higher
-                                    // number than the previously loaded items.
-                                    getLength: function() {
-                                        console.log("index: " + this.posts_.length + 5);
-                                        return this.posts_.length + 5;
-                                    },
-                                    fetchMoreItems_: function(index) {
-                                        var self2 = this;
-                                        console.log("fetch: " + index);
-                                        var nextSlice = $scope.postSignatures.slice(this.posts_.length, this.posts_.length + 9);
-                                        PostService.getPostsFromVKById({
-                                            posts: nextSlice,
-                                            extended: '1',
-                                            v: '5.37'
-                                        }).then(function (posts) {
-                                            self2.posts_ = self2.posts_.concat(posts);
-                                        });
-                                        // For demo purposes, we simulate loading more items with a timed
-                                        //// promise. In real code, this function would likely contain an
-                                        //// $http request.
-                                        //if (this.toLoad_ < index) {
-                                        //    this.toLoad_ += 20;
-                                        //    $timeout(angular.noop, 300).then(angular.bind(this, function() {
-                                        //        this.numLoaded_ = this.toLoad_;
-                                        //    }));
-                                        //}
+                    var postSignatures = [];
+                    angular.forEach(data.posts, function (value, key) {
+                        if (value.hasOwnProperty("originalId")) {
+                            this.push(userId + "_" + value.originalId);
+                        }
+                    }, postSignatures);
+                    //material
+                    $scope.posts = {
+                        posts_: [],
+                        toLoad_: 0,
+                        // Required.
+                        getItemAtIndex: function (index) {
+                            var self = this;
+                            if (index > (this.posts_.length - 1)) {
+                                $timeout(function () {
+                                    self.fetchMoreItems_(index);
+                                }, 300);
+                                return null;
+                            }
+                            return self.posts_[index];
+                        },
+                        // Required.
+                        // For infinite scroll behavior, we always return a slightly higher
+                        // number than the previously loaded items.
+                        getLength: function () {
+                            return this.posts_.length + 5;
+                        },
+                        fetchMoreItems_: function (index) {
+                            var self = this;
+                            if (self.toLoad_ < index) {
+                                self.toLoad_ += 25;
+                                PostService.getPostsFromVKById({
+                                    posts: postSignatures.slice(this.posts_.length, 25).join(),
+                                    extended: '1',
+                                    v: '5.37',
+                                    test_mode: '1'
+                                }).then(function (posts) {
+                                    self.posts_ = self.posts_.concat(posts);
+                                    for (var i = 0; i < self.posts_.length; i++) {
+                                        self.posts_[i].tags = data.posts[i].tags;
                                     }
-                                };
-                            });
+                                    console.log("After ", self.posts_);
+                                });
+                            }
+                            // For demo purposes, we simulate loading more items with a timed
+                            //// promise. In real code, this function would likely contain an
+                            //// $http request.
+                            //if (this.toLoad_ < index) {
+                            //    this.toLoad_ += 20;
+                            //    $timeout(angular.noop, 300).then(angular.bind(this, function() {
+                            //        this.numLoaded_ = this.toLoad_;
+                            //    }));
+                            //}
+                        }
+                    };
 
-                        });
-                    });
+                    $scope.isLoaded = true;
+                    //});
                 });
             }
+
+            $scope.addTag = function (postId, tagName) {
+                PostService.addTagToPost(userId, postId, tagName);
+                return {
+                    name: tagName
+                };
+            };
         });
 
-        //$scope.loadMorePosts = function () {4
-        //    console.log("inside loadMore");
-        //    var nextSlice = $scope.postSignatures.slice($scope.posts.length, $scope.posts.length + 25);
-        //    PostService.getPostsFromVKById({
-        //        posts: nextSlice,
-        //        extended: '1',
-        //        v: '5.37'
-        //    }).then(function (posts) {
-        //        console.log("posts:" + posts);
-        //        $scope.posts.concat(posts);
-        //        console.log("scope posts: " + $scope.posts)
-        //    });
-        //};
-
-        //$scope.postsOptions = {
-        //    accept: function(sourceNodeScope, destNodesScope, destIndex) {
-        //        return true;
-        //    },
-        //    dropped: function(e) {
-        //        console.log ("source modelValue: " + e.source.nodeScope.$modelValue);
-        //        console.log ("dest modelValue: " + e.dest.nodeScope.$modelValue);
-        //    }
-        //};
 
     }]);
