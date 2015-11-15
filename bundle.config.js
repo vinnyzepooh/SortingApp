@@ -66,10 +66,9 @@ module.exports = {
                 './bower_components/angular-aria/angular-aria.js',
                 './bower_components/angular-material/angular-material.js',
                 './bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-                './bower_components/firebase/firebase.js',
                 './bower_components/angularfire/dist/angularfire.js',
                 './bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-                './bower_components/ng-resource/dist/ng-resource.js'
+                './bower_components/angular-resource/angular-resource.js'
             ],
             styles: [
                 './bower_components/angular-material/angular-material.scss',
@@ -83,10 +82,9 @@ module.exports = {
                         'bower_components/angular/angular.js',
                         'bower_components/angular-animate/angular-animate.js',
                         'bower_components/angular-aria/angular-aria.js',
-                        'bower_components/ng-resource/dist/ng-resource.js',
                         'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-                        'bower_components/firebase/firebase.js',
                         'bower_components/angularfire/dist/angularfire.js',
+                        'bower_components/angular-resource/angular-resource.js',
                         '*.js'
                     ]
                 },
@@ -102,7 +100,9 @@ module.exports = {
             src: [
                 './src/**/*.html',
                 './src/**/*.svg',
-                './src/**/*.json'
+                './src/**/*.json',
+                './src/**/*.gif',
+                './src/**/*.png'
             ],
             base: './src',
             watch: true

@@ -12,7 +12,14 @@
     <!-- endinject -->
 </head>
 <body>
-    <div class="page-main" layout="row" data-ui-view="main"></div>
+    <div class="page-main" layout="row" layout-align="center start" data-ui-view="main" ng-show="isSynchronized()"></div>
+
+    <div class="preload-wrapper" layout="row" layout-align="center center" ng-hide="isSynchronized()">
+        <figure>
+            <p><img class="page-main__preload-image" src="app/assets/img/preloader.gif" alt="Preloader"/></p>
+            <figcaption class="page-main__preload-message">Synchronizing posts, please wait...</figcaption>
+        </figure>
+    </div>
 
     <script src="//vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script>
     <!-- inject:js -->
