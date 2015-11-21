@@ -5,6 +5,7 @@ angular.module('wsApp', [
     'ngMaterial',
     'infinite-scroll',
     'ui.tree',
+    'ui.sortable',
     'wsApp.common',
     'wsApp.tags',
     'wsApp.posts'

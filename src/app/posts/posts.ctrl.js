@@ -20,6 +20,48 @@ angular.module('wsApp.posts')
                 $scope.screenName = profile.profiles[0].screen_name;
             });
 
+            $scope.dropzoneFields = [];
+            $scope.dragging = false;
+
+            $scope.draggable = {
+                connectWith: ".dropzone",
+                start: function (e, ui) {
+                    $scope.$apply(function() {
+                        $scope.dragging = true;
+                    });
+                    $('.dropzone').sortable('refresh');
+                },
+                update: function (e, ui) {
+                    if (ui.item.sortable.droptarget[0].classList[0] !== "dropzone")
+                        ui.item.sortable.cancel();
+                },
+                stop: function (e, ui) {
+
+                    if (ui.item.sortable.droptarget == undefined) {
+                        $scope.$apply($scope.dragging = false);
+                        return;
+                    }else if (ui.item.sortable.droptarget[0].classList[0] == "dropzone") {
+
+
+                        $scope.$apply($scope.dragging = false);
+
+                        var tagged = ui.item.sortable.droptarget[0].firstChild.attributes.href.nodeValue;
+                        var droppedTag = tagged.substr(5);
+
+                        TagService.addTagToPost(userId, ui.item.sortable.model.id, droppedTag).$promise.then(function(response) {
+                            $scope.$emit('tagAdded', {
+                                tag: droppedTag
+                            });
+                        });
+
+                    }else{
+                        $scope.$apply($scope.dragging = false);
+                    }
+
+                }
+
+            };
+
             $scope.$on('synchronizationEvent', function (event, data) {
                 getPostsByTag(userId);
             });
@@ -65,16 +107,6 @@ angular.module('wsApp.posts')
                         });
                     };
 
-                    $scope.postsOptions = {
-                        dropped: function (event) {
-                            var postsOrder = [];
-                            for (var i = 0; i < $scope.posts.length; i++) {
-                                postsOrder.push($scope.posts[i]);
-                            }
-                            localStorage.setItem("postsOrder", postsOrder);
-                        }
-                    };
-
 
                     $scope.isLoaded = true;
                 });
@@ -101,8 +133,7 @@ angular.module('wsApp.posts')
                     tag: tagName
                 });
             };
-
-        });
+        })
 
 
     }]);

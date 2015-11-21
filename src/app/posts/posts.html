@@ -3,17 +3,11 @@
         <span class="page-main__wall-caption md-flex">Add some Tags to Your Wall Posts!</span>
     </div>
 </md-toolbar>
-<div id="scrollingContainer" class="block" style="left: 25%; width: 75%; background: #fff;">
+
 <div class="post_area">
-<div    infinite-scroll-container="'#scrollingContainer'"
-        infinite-scroll="loadMorePosts()"
-        infinite-scroll-distance="0"
-        infinite-scroll-parent="true">
 
-<div ui-tree="postsOptions" data-drag-enabled="false">
-
-            <ul ui-tree-nodes="" ng-model="posts" id="listed">
-                <li ui-tree-node id="postContainer" ng-repeat="post in posts | orderBy: 'id': true">
+            <ul ui-sortable="draggable" ng-model="posts" id="listed">
+                <li id="postContainer" ng-repeat="post in posts | orderBy: 'id': true">
                         <div class="pics">
                             <span ng-repeat="pics in post.attachments" ng-hide="!pics.photo.photo_130">
                                 <span><img class="images" ng-src="{{pics.photo.photo_130}}"></span></span>
@@ -116,7 +110,5 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
 
-</div>
-</div>
-</div>
+
 </div>

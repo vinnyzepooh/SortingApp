@@ -6,7 +6,7 @@
     </md-toolbar>
 
     <ul class="tags__list">
-        <li ng-repeat="tag in tags"><a class="tags__item" ng-class="{'tags__item-active': tag.isActive}" href="/tag/{{tag.name}}">{{tag.name}}&nbsp;<span
+        <li ng-repeat="tag in tags" ui-sortable="dropzone" class="dropzone" ng-model="dropzoneFields"><a class="tags__item" ng-class="{'tags__item-active': tag.isActive}" href="/tag/{{tag.name}}">{{tag.name}}&nbsp;<span
                 class="counter">{{tag.count}}</span></a>
         </li>
     </ul>
