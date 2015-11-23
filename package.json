@@ -34,5 +34,8 @@
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "gulp build"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
   }
 }

@@ -60,15 +60,16 @@ module.exports = {
         vendor: {
             scripts: [
                 './bower_components/jquery/dist/jquery.js',
+                './bower_components/jquery-ui/ui/jquery-ui.js',
                 './bower_components/angular/angular.js',
                 './bower_components/angular-ui-router/release/angular-ui-router.js',
                 './bower_components/angular-animate/angular-animate.js',
                 './bower_components/angular-aria/angular-aria.js',
                 './bower_components/angular-material/angular-material.js',
                 './bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-                './bower_components/angularfire/dist/angularfire.js',
                 './bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-                './bower_components/angular-resource/angular-resource.js'
+                './bower_components/angular-resource/angular-resource.js',
+                './bower_components/angular-ui-sortable/sortable.js'
             ],
             styles: [
                 './bower_components/angular-material/angular-material.scss',
@@ -79,12 +80,13 @@ module.exports = {
                 order: {
                     scripts: [
                         'bower_components/jquery/dist/jquery.js',
+                        'bower_components/jquery-ui/ui/jquery-ui.js',
                         'bower_components/angular/angular.js',
                         'bower_components/angular-animate/angular-animate.js',
                         'bower_components/angular-aria/angular-aria.js',
                         'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-                        'bower_components/angularfire/dist/angularfire.js',
                         'bower_components/angular-resource/angular-resource.js',
+                        'bower_components/angular-ui-sortable/sortable.js',
                         '*.js'
                     ]
                 },
