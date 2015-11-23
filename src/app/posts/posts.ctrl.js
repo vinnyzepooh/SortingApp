@@ -28,6 +28,8 @@ angular.module('wsApp.posts')
                 start: function (e, ui) {
                     $scope.$apply(function() {
                         $scope.dragging = true;
+                        console.log('drag start');
+                        console.log($scope.dragging);
                     });
                     $('.dropzone').sortable('refresh');
                 },
