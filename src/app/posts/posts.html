@@ -4,111 +4,122 @@
     </div>
 </md-toolbar>
 
-<div class="post_area">
+<div id="scrollingContainer" class="block">
+    <div    infinite-scroll-container="'#scrollingContainer'"
+            infinite-scroll="loadMorePosts()"
+            infinite-scroll-distance="0"
+            infinite-scroll-parent="true">
 
-            <ul ui-sortable="draggable" ng-model="posts" id="listed">
-                <li id="postContainer" ng-repeat="post in posts | orderBy: 'id': true">
-                        <div class="pics">
+    <ul id="listed">
+        <li class="postContainer" ng-drag="true" ng-drag-data="post" ng-repeat="post in posts | orderBy: 'id': true">
+
+            <div class="handle" ng-drag-handle><img ng-src="../app/assets/img/handle-icon-actions.png"></div>
+
+            <div class="pics">
                             <span ng-repeat="pics in post.attachments" ng-hide="!pics.photo.photo_130">
                                 <span><img class="images" ng-src="{{pics.photo.photo_130}}"></span></span>
                             <span ng-repeat="oldPost in post.copy_history">
-                                <span ng-repeat="oldPics in oldPost.attachments" ng-hide="!oldPics.photo.photo_130"><img class="images" ng-src=" {{oldPics.photo.photo_130}}"></span></span>
-                        </div>
-                        <div class="text">
-                        <div ng-init="limit = 350; moreShown = false"> {{post.text | limitTo: limit}}
-                            <a ng-show="post.text.length > limit"
-                               href ng-click="limit=post.text.length; moreShown = true">  >>>...
-                            </a>
-                            <a ng-show="moreShown" href ng-click="limit=350; moreShown = false"> <<< </a>
-                        </div>
-                        <div ng-repeat="oldPost in post.copy_history">
-                            {{oldPost.text | limitTo: limit}}
-                            <a ng-show="oldPost.text.length > limit"
-                               href ng-click="limit=oldPost.text.length; moreShown = true">  >>>...
-                            </a>
-                            <a ng-show="moreShown" href ng-click="limit=350; moreShown = false"> <<< </a>
-                        </div>
-                        </div>
-                        <div class="audio">
-                            <div ng-repeat="audio in post.attachments">
-                                <div>
-                                    <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
-                                       target="_blank" ng-hide="!audio.audio.artist"> <img
-                                            src="../app/assets/img/nav.png">
-                                        {{audio.audio.artist}} -
-                                        {{audio.audio.title}} </a>
-                                </div>
-                            </div>
-                            <div ng-repeat="oldAudio in post.copy_history">
-                                <div ng-repeat="historyAudio in oldAudio.attachments">
-                                    <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
-                                       target="_blank" ng-hide="!historyAudio.audio.artist"> <img
-                                            src="../app/assets/img/nav.png">
-                                        {{historyAudio.audio.artist}} -
-                                        {{historyAudio.audio.title}} </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="video">
-                            <div>
-                                <div ng-repeat="video in post.attachments">
-                                    <div>
-                                        <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
-                                           target="_blank" ng-hide="!video.video.title"> <img
-                                                class="videoPrev"
-                                                ng-src="{{video.video.photo_320}}">
-                                            <img class="videoPic"
-                                                 src="../app/assets/img/PlayButton.png"
-                                                 style="width: 120px; height: 40px"> <br>
-
-                                            <p class="vidTittle"> {{video.video.title}} </p></a>
-                                    </div>
-                                </div>
-                                <div ng-repeat="oldVideo in post.copy_history">
-                                    <div ng-repeat="historyVideo in oldVideo.attachments">
-                                        <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
-                                           target="_blank" ng-hide="!historyVideo.video.title"> <img
-                                                class="videoPrev"
-                                                ng-src="{{historyVideo.video.photo_320}}">
-                                            <img class="videoPic"
-                                                 src="../app/assets/img/PlayButton.png"
-                                                 style="width: 120px; height: 40px">
-
-                                            <div>
-
-                                                <p class="vidTittle"> {{historyVideo.video.title}} </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="allPost">
+                                <span ng-repeat="oldPics in oldPost.attachments" ng-hide="!oldPics.photo.photo_130"><img
+                                        class="images" ng-src=" {{oldPics.photo.photo_130}}"></span></span>
+            </div>
+            <div class="text">
+                <div ng-init="limit = 350; moreShown = false"> {{post.text | limitTo: limit}}
+                    <a ng-show="post.text.length > limit"
+                       href ng-click="limit=post.text.length; moreShown = true"> >>>...
+                    </a>
+                    <a ng-show="moreShown" href ng-click="limit=350; moreShown = false"> <<< </a>
+                </div>
+                <div ng-repeat="oldPost in post.copy_history">
+                    {{oldPost.text | limitTo: limit}}
+                    <a ng-show="oldPost.text.length > limit"
+                       href ng-click="limit=oldPost.text.length; moreShown = true"> >>>...
+                    </a>
+                    <a ng-show="moreShown" href ng-click="limit=350; moreShown = false"> <<< </a>
+                </div>
+            </div>
+            <div class="audio">
+                <div ng-repeat="audio in post.attachments">
+                    <div>
+                        <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
+                           target="_blank" ng-hide="!audio.audio.artist"> <img
+                                src="../app/assets/img/nav.png">
+                            {{audio.audio.artist}} -
+                            {{audio.audio.title}} </a>
+                    </div>
+                </div>
+                <div ng-repeat="oldAudio in post.copy_history">
+                    <div ng-repeat="historyAudio in oldAudio.attachments">
+                        <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
+                           target="_blank" ng-hide="!historyAudio.audio.artist"> <img
+                                src="../app/assets/img/nav.png">
+                            {{historyAudio.audio.artist}} -
+                            {{historyAudio.audio.title}} </a>
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <div>
+                    <div ng-repeat="video in post.attachments">
+                        <div>
                             <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
-                               target="_blank">Show VK's Post</a>
+                               target="_blank" ng-hide="!video.video.title"> <img
+                                    class="videoPrev"
+                                    ng-src="{{video.video.photo_320}}">
+                                <img class="videoPic"
+                                     src="../app/assets/img/PlayButton.png"
+                                     style="width: 120px; height: 40px"> <br>
+
+                                <p class="vidTittle"> {{video.video.title}} </p></a>
                         </div>
+                    </div>
+                    <div ng-repeat="oldVideo in post.copy_history">
+                        <div ng-repeat="historyVideo in oldVideo.attachments">
+                            <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
+                               target="_blank" ng-hide="!historyVideo.video.title"> <img
+                                    class="videoPrev"
+                                    ng-src="{{historyVideo.video.photo_320}}">
+                                <img class="videoPic"
+                                     src="../app/assets/img/PlayButton.png"
+                                     style="width: 120px; height: 40px">
+
+                                <div>
+
+                                    <p class="vidTittle"> {{historyVideo.video.title}} </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="allPost">
+                <a href="http://vk.com/{{screenName}}?w=wall{{post.owner_id}}_{{post.id}}%2Fall"
+                   target="_blank">Show VK's Post</a>
+            </div>
 
 
-                        <md-chips class="custom-chips" ng-model="post.tags"
-                                  md-on-append="addTag(post.id, $chip)"
-                                  md-on-remove="removeTag(post.id, $chip.name)"
-                                  placeholder="Enter a tag"
-                                  delete-button-label="Remove Tag"
-                                  delete-hint="Press delete to remove tag"
-                                  secondary-placeholder="+Tag"                                >
-                            <md-chip-template>
-                                <span><a href="/tag/{{$chip.name}}">#{{$chip.name}}</a></span>
-                            </md-chip-template>
-                        </md-chips>
+            <md-chips class="custom-chips" ng-model="post.tags"
+                      md-on-append="addTag(post.id, $chip)"
+                      md-on-remove="removeTag(post.id, $chip.name)"
+                      placeholder="Enter a tag"
+                      delete-button-label="Remove Tag"
+                      delete-hint="Press delete to remove tag"
+                      secondary-placeholder="+Tag">
 
-                </li>
+                <md-chip-template>
+                    <span><a href="/tag/{{$chip.name}}">{{$chip.name}}</a></span>
+                </md-chip-template>
 
-            </ul>
+            </md-chips>
+
+        </li>
+
+    </ul>
 
     <div class="preload-wrapper" layout="row" layout-sm="column" layout-align="center center" ng-hide="isLoaded">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
 
 
+</div>
 </div>

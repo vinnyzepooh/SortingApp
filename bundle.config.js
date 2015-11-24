@@ -69,7 +69,8 @@ module.exports = {
                 './bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
                 './bower_components/angular-ui-tree/dist/angular-ui-tree.js',
                 './bower_components/angular-resource/angular-resource.js',
-                './bower_components/angular-ui-sortable/sortable.js'
+                './bower_components/ngDraggable/ngDraggable.js'
+                //'./bower_components/angular-ui-sortable/sortable.js'
             ],
             styles: [
                 './bower_components/angular-material/angular-material.scss',
@@ -86,7 +87,8 @@ module.exports = {
                         'bower_components/angular-aria/angular-aria.js',
                         'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
                         'bower_components/angular-resource/angular-resource.js',
-                        'bower_components/angular-ui-sortable/sortable.js',
+                        'bower_components/ngDraggable/ngDraggable.js',
+                        //'bower_components/angular-ui-sortable/sortable.js',
                         '*.js'
                     ]
                 },

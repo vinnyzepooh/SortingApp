@@ -21,7 +21,7 @@
     "jquery": "~2.1.4",
     "jquery-ui": "~1.11.4",
     "angular-resource": "~1.4.7",
-    "angular-ui-sortable": "~0.13.4"
+    "ngDraggable": "~0.1.8"
   },
   "resolutions": {
     "angular": "~1.4.x"

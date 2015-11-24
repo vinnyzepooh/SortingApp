@@ -47,6 +47,13 @@ angular.module('wsApp.tags')
                     }
                 }
             });
+
+            $scope.onDropComplete=function(post, tag){
+                $scope.$broadcast('tagToPostAdded', {
+                    post: post,
+                    tag: tag.name
+                });
+            }
         });
 
         function showTags(tags) {

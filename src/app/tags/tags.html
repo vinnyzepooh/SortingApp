@@ -1,3 +1,4 @@
+
 <aside class="page-main__tags" flex-gt-md="20" flex-gt-lg="10" layout="column">
     <md-toolbar>
         <div class="md-toolbar-tools">
@@ -6,7 +7,7 @@
     </md-toolbar>
 
     <ul class="tags__list">
-        <li ng-repeat="tag in tags" ui-sortable="dropzone" class="dropzone" ng-model="dropzoneFields"><a class="tags__item" ng-class="{'tags__item-active': tag.isActive}" href="/tag/{{tag.name}}">{{tag.name}}&nbsp;<span
+        <li ng-repeat="tag in tags" ng-drop="true" ng-drop-success="onDropComplete($data, tag)"><a class="tags__item" ng-class="{'tags__item-active': tag.isActive}" href="/tag/{{tag.name}}">{{tag.name}}&nbsp;<span
                 class="counter">{{tag.count}}</span></a>
         </li>
     </ul>

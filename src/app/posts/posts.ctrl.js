@@ -1,9 +1,9 @@
 angular.module('wsApp.posts')
 
     .controller('PostsController', ['$scope', '$rootScope', '$stateParams', 'AuthService', 'Constants', 'PostService', 'SyncService', 'TagService', function ($scope, $rootScope, $stateParams, AuthService, Constants, PostService, SyncService, TagService) {
-
         $scope.isLoaded = false;
-
+        $scope.isDragging=false;
+        $scope.hiddenDrop = [];
 
         AuthService.getMyProfile({
             version: Constants.API_VERSION
@@ -20,53 +20,36 @@ angular.module('wsApp.posts')
                 $scope.screenName = profile.profiles[0].screen_name;
             });
 
-            $scope.dropzoneFields = [];
-            $scope.dragging = false;
-
-            $scope.draggable = {
-                connectWith: ".dropzone",
-                start: function (e, ui) {
-                    $scope.$apply(function() {
-                        $scope.dragging = true;
-                        console.log('drag start');
-                        console.log($scope.dragging);
-                    });
-                    $('.dropzone').sortable('refresh');
-                },
-                update: function (e, ui) {
-                    if (ui.item.sortable.droptarget[0].classList[0] !== "dropzone")
-                        ui.item.sortable.cancel();
-                },
-                stop: function (e, ui) {
-
-                    if (ui.item.sortable.droptarget == undefined) {
-                        $scope.$apply($scope.dragging = false);
-                        return;
-                    }else if (ui.item.sortable.droptarget[0].classList[0] == "dropzone") {
-
-
-                        $scope.$apply($scope.dragging = false);
-
-                        var tagged = ui.item.sortable.droptarget[0].firstChild.attributes.href.nodeValue;
-                        var droppedTag = tagged.substr(5);
-
-                        TagService.addTagToPost(userId, ui.item.sortable.model.id, droppedTag).$promise.then(function(response) {
-                            $scope.$emit('tagAdded', {
-                                tag: droppedTag
-                            });
-                        });
-
-                    }else{
-                        $scope.$apply($scope.dragging = false);
-                    }
-
-                }
-
-            };
-
             $scope.$on('synchronizationEvent', function (event, data) {
                 getPostsByTag(userId);
             });
+
+            $scope.$on('tagToPostAdded', function (event, data) {
+
+                var index = $scope.posts.indexOf(data.post);
+                if (index > -1) {
+                    $scope.posts.splice(index, 1);
+                }
+
+                $scope.hiddenDrop.push(data.post);
+
+
+                TagService.addTagToPost(userId, data.post.id, data.tag).$promise.then(function(response) {
+                    $scope.$emit('tagAdded', {
+                        tag: data.tag
+                    });
+                });
+            });
+
+            //$scope.$on('draggable:start', function (data) {
+            //    $scope.isDragging=true;
+            //    if (!$rootScope.$$phase) $rootScope.$apply();
+            //});
+            //$scope.$on('draggable:end', function (data) {
+            //    $scope.isDragging=false;
+            //    if (!$rootScope.$$phase) $rootScope.$apply();
+            //});
+
 
             function getPostsByTag(userId) {
                 TagService.getPostsByTag($stateParams.tagName, userId).$promise.then(function (data) {
